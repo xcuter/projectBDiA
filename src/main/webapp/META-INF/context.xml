@@ -1,0 +1,26 @@
+<Context>
+    <Resource name="jdbc/SimpleBank"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+              type="javax.sql.DataSource"
+              username="jee"
+              password="jee"
+              url="jdbc:postgresql://localhost:5432/inwDB"
+              driverClassName="org.postgresql.Driver"
+              />
+    <Realm className="org.apache.catalina.realm.DataSourceRealm"
+           dataSourceName="jdbc/SimpleBank"
+           localDataSource="true"
+           userTable="users"
+           userNameCol="email"
+           userCredCol="password"
+           userRoleTable="userRole"
+           roleNameCol="name">
+
+        <CredentialHandler className="org.apache.catalina.realm.NestedCredentialHandler">
+            <CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler"
+                               algorithm="SHA-256"/>
+            <CredentialHandler
+                    className="org.apache.catalina.realm.MessageDigestCredentialHandler"/>
+        </CredentialHandler>
+    </Realm>
+</Context>
