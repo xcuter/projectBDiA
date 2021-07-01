@@ -1,5 +1,6 @@
 package com.Inw.projectBDiA.Controllers.auth;
 
+import javax.servlet.annotation.HttpConstraint;
 import javax.servlet.annotation.HttpMethodConstraint;
 import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
@@ -10,9 +11,12 @@ import java.io.IOException;
 
 @WebServlet("/login")
 @ServletSecurity(
-        httpMethodConstraints = {
-                @HttpMethodConstraint(value = "GET", rolesAllowed = "user_role")
-        })
+        value = @HttpConstraint(rolesAllowed = {"USER", "ADMIN"}),
+            httpMethodConstraints = {
+                @HttpMethodConstraint(value = "POST", rolesAllowed = {"USER", "ADMIN"}),
+                @HttpMethodConstraint(value = "GET", rolesAllowed = {"USER", "ADMIN"})
+                    }
+                )
 public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

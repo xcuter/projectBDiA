@@ -25,6 +25,7 @@ public class UserRegisterService {
 
     private static void hashPasswordWithSha256(User userToRegister) {
         String passwordSha256 = Hashing.sha256().hashString(userToRegister.getPassword(), StandardCharsets.UTF_8).toString();
+        userToRegister.setPassword(passwordSha256);
     }
 
     private static class UserMapper {

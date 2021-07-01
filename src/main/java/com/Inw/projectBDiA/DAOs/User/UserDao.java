@@ -21,6 +21,8 @@ public class UserDao extends BaseDao {
     private void saveUserRole(User user){
         try(Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(saveUserRoleQuery)) {
+            statement.setString(1, user.getEmail());
+            statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -37,17 +39,10 @@ public class UserDao extends BaseDao {
             statement.setLong(3, rnd.nextLong());
             statement.setString(4, user.getEmail());
             statement.setString(5, user.getPassword());
-            statement.setInt(6,1);
             System.out.println(statement);
             statement.execute();
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-
-            if(generatedKeys.next()){
-                user.setId(generatedKeys.getLong(1));
-            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
-
 }
